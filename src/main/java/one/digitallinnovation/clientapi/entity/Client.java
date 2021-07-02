@@ -31,7 +31,7 @@ public class Client {
     @Column(nullable = false)
     private String emailCorporate;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
-    private Adress corporateAdress;
+    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
+    private List<Adress> corporateAdress;
 
 }
