@@ -26,10 +26,7 @@ public class ClientService {
     public MessageResponseDTO createClient(Client client) {
 
         Client savedClient = clientRepository.save(client);
-        return MessageResponseDTO
-                .builder()
-                .message("Client created with ID " + savedClient.getId())
-                .build();
+        return createMessageResponse(savedClient.getId(), "Created client with ID ");
     }
 
     public List<Client> listAll() {
@@ -49,10 +46,26 @@ public class ClientService {
         clientRepository.deleteById(id);
     }
 
-    public Client verifyIfExists(Long id) throws ClientNotFoundException {
+    public MessageResponseDTO updateById(Long id, Client client) throws ClientNotFoundException {
+        verifyIfExists(id);
+
+        Client updateClient = clientRepository.save(client);
+
+        return createMessageResponse(updateClient.getId(), "Updated client with ID ");
+
+    }
+
+    private Client verifyIfExists(Long id) throws ClientNotFoundException {
         return clientRepository.findById(id)
                 .orElseThrow(() -> new ClientNotFoundException(id));
 
 
+    }
+
+    private MessageResponseDTO createMessageResponse (Long id, String message) {
+        return MessageResponseDTO
+                .builder()
+                .message(message + id)
+                .build();
     }
 }
