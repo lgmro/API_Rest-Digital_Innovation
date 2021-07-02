@@ -39,4 +39,10 @@ public class ClientController {
         return clientService.findById(id);
     }
 
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteById(@PathVariable Long id) throws ClientNotFoundException {
+        clientService.delete(id);
+    }
+
 }

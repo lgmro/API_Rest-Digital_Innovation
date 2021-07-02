@@ -39,9 +39,20 @@ public class ClientService {
     }
 
     public Client findById(Long id) throws ClientNotFoundException {
-        Client client = clientRepository.findById(id)
-                .orElseThrow(() -> new ClientNotFoundException(id));
+        Client client = verifyIfExists(id);
 
         return client;
+    }
+
+    public void delete(Long id) throws ClientNotFoundException {
+        verifyIfExists(id);
+        clientRepository.deleteById(id);
+    }
+
+    public Client verifyIfExists(Long id) throws ClientNotFoundException {
+        return clientRepository.findById(id)
+                .orElseThrow(() -> new ClientNotFoundException(id));
+
+
     }
 }
