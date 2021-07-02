@@ -2,12 +2,13 @@ package one.digitallinnovation.clientapi.service;
 
 import one.digitallinnovation.clientapi.dto.response.MessageResponseDTO;
 import one.digitallinnovation.clientapi.entity.Client;
+import one.digitallinnovation.clientapi.exception.ClientNotFoundException;
 import one.digitallinnovation.clientapi.repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 @Service
 
@@ -35,5 +36,12 @@ public class ClientService {
        List<Client> allClient = clientRepository.findAll();
 
         return allClient;
+    }
+
+    public Client findById(Long id) throws ClientNotFoundException {
+        Client client = clientRepository.findById(id)
+                .orElseThrow(() -> new ClientNotFoundException(id));
+
+        return client;
     }
 }
