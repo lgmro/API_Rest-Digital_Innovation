@@ -1,5 +1,6 @@
 package one.digitallinnovation.clientapi.controller;
 
+import lombok.AllArgsConstructor;
 import one.digitallinnovation.clientapi.dto.response.MessageResponseDTO;
 import one.digitallinnovation.clientapi.entity.Client;
 import one.digitallinnovation.clientapi.exception.ClientNotFoundException;
@@ -9,18 +10,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/client")
+@AllArgsConstructor(onConstructor = @__(@Autowired))
 public class ClientController {
 
     private ClientService clientService;
-
-    @Autowired
-    public ClientController(ClientService clientService) {
-        this.clientService = clientService;
-    }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
