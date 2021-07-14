@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
@@ -32,7 +34,7 @@ class ClientRepositoryTest {
 
     @Test
     @DisplayName("Save updates Client when Successful")
-    void save_Updateslient_WhenSucessful () {
+    void save_UpdatesClient_WhenSucessful () {
         Client clientToBeSaved = createClient();
         Client savedClient = this.clientRepository.save(clientToBeSaved);
         savedClient.setCorporateName("JAVA DEVELOPED");
@@ -44,6 +46,19 @@ class ClientRepositoryTest {
         Assertions.assertThat(clientUpdate.getCorporateName()).isEqualTo(savedClient.getCorporateName());
 
 
+    }
+
+    @Test
+    @DisplayName("Delete removes Client when Successful")
+    void delete_RemoveClient_WhenSucessful () {
+        Client clientToBeSaved = createClient();
+        Client savedClient = this.clientRepository.save(clientToBeSaved);
+
+        this.clientRepository.delete(savedClient);
+
+        Optional<Client> clientOptional = this.clientRepository.findById(savedClient.getId());
+
+        Assertions.assertThat(clientOptional).isEmpty();
     }
 
     private Client createClient() {
