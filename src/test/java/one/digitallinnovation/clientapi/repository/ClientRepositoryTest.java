@@ -30,6 +30,22 @@ class ClientRepositoryTest {
 
     }
 
+    @Test
+    @DisplayName("Save updates Client when Successful")
+    void save_Updateslient_WhenSucessful () {
+        Client clientToBeSaved = createClient();
+        Client savedClient = this.clientRepository.save(clientToBeSaved);
+        savedClient.setCorporateName("JAVA DEVELOPED");
+        Client clientUpdate = this.clientRepository.save(savedClient);
+
+
+        Assertions.assertThat(clientUpdate).isNotNull();
+        Assertions.assertThat(clientUpdate.getId()).isNotNull();
+        Assertions.assertThat(clientUpdate.getCorporateName()).isEqualTo(savedClient.getCorporateName());
+
+
+    }
+
     private Client createClient() {
         return Client.builder()
                 .cnpj("17.244.147/0001-81")
